@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coding Bot</title>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+
+<!-- Magnific Popup core CSS file -->
+<link rel="stylesheet" href="/static/magnific-popup/magnific-popup.css">
+<!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!-- Magnific Popup core JS file -->
+<script src="/static/magnific-popup/jquery.magnific-popup.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/devc.css">
+
+</head>
+<body id="index" class="home">
+<div id="links">
+
+</div>
+
+<div id="test-popup" class="white-popup2 mfp-hide">
+
+
+  <div class="card-group">
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Aggregate functions </h5>
+      <p class="card-text">These group represents REDUCE functions, where they transform  input LIST into a scalar (single) value</p>
+
+        <ui>
+            <li><a href="/examples?ex=2_1">Sum</a></li>&nbsp;&nbsp;
+            <li><a href="/examples?ex=2_1">Sum</a></li>&nbsp;&nbsp;
+            <li><a href="/examples?ex=2_2">Max</a></li>&nbsp;&nbsp;
+            <li><a href="/examples?ex=2_3">Min</a></li>&nbsp;&nbsp;
+            <li><a href="/examples?ex=2_4">Mean</a></li>&nbsp;&nbsp;
+        </ui>
+    </div>
+
+  </div>
+
+
+  <div class="card">
+      <div class="card-body">
+      <h5 class="card-title">Mapping of Sequences </h5>
+      <p class="card-text">This group represents MAPPING functionality, where input LIST transformed to output by following a mapping rule.</p>
+
+        <ui>
+            <li><a href="/examples?ex=1_1">Arthimatic </a></li>&nbsp;&nbsp;&nbsp;
+            <li><a href="/examples?ex=1_2">Geometric</a></li>&nbsp;&nbsp;&nbsp;
+            <li><a href="/examples?ex=1_3">Logarithmic</a></li>&nbsp;&nbsp;&nbsp;
+        </ui>
+    </div>
+  </div>
+
+  <div class="card">
+      <div class="card">
+      <div class="card-body">
+      <h5 class="card-title">Mapping into Categories </h5>
+      <p class="card-text">This group represents MAPPING into Categories, where input LIST transformed to output based on categories.</p>
+
+        <ui>
+            <li><a href="/examples?ex=3_1">FizBuzz </a></li>&nbsp;&nbsp;&nbsp;
+            <li><a href="/examples?ex=3_2">FizBuzz 2</a></li>&nbsp;&nbsp;&nbsp;
+            <li><a href="/examples?ex=3_3">Child Teen</a></li>&nbsp;
+            <li><a href="/examples?ex=5_1">Class Objects</a></li>&nbsp;&nbsp;
+        </ui>
+    </div>
+  </div>
+  </div>
+
+</div>
+
+</div>
+
+
+
+<div id="content">
+    <!-- ************  CODING ZONE  ************ -->
+    <div id="code">
+        <form method="post" action="{{ url_for(target) }}">
+            <div id="title-code" class="head-section">
+              Source Code
+            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#test-popup" class="open-popup-link">Examples</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input id="bot-button" class="head-section" type="submit" name="button1" value="Invoke Bot" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input id="launch-button" class="head-section" type="submit"  name="button1" value="Run" />
+            {% block code %}
+            {% endblock %}
+        </form>
+    </div>
+    
+    <!-- ************ RUNNING ZONE RESULTS ************ -->
+    
+    <div id="result">
+        <div id="title-result" class="head-section">
+            Output result
+        </div>
+        {% block run %}
+        {% endblock %}
+    </div>
+    
+    <!-- ************ COMPILATION RESULTS ZONE ************ -->
+
+
+    <div id="compile">
+        <div id="title-compile" class="head-section">
+            Compilation / Output
+        </div>
+        {% block comp %}
+        {% endblock %}
+    </div>
+</div>
+<script src="{{ url_for('static', filename='ace/ace.js') }}"></script>
+<script>
+    // The Ace editor needs divs instead of textareas
+    // So we hide the textarea and show a div instead
+    var editorElement = document.getElementById("text-code");
+    editorElement.classList.add("hidden");
+    document.getElementById("text-code-ace").classList.remove("hidden");
+
+    // Set up the editor
+    var editor = ace.edit("text-code-ace");
+    editor.setTheme("ace/theme/tomorrow");
+    var language = ("{{ target }}" === "runpy") ? "python" : "c_cpp";
+    editor.getSession().setMode("ace/mode/" + language);
+
+    // Make sure we copy the content of the editor to the textarea before posting
+    // its content to the server
+    document.getElementById("launch-button").addEventListener("click", function () {
+        editorElement.innerHTML = editor.getValue();
+    });
+    document.getElementById("bot-button").addEventListener("click", function () {
+        editorElement.innerHTML = editor.getValue();
+    });
+</script>
+
+<script>
+$('.open-popup-link').magnificPopup({
+  type:'inline',
+  leftClick: true // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href.
+});
+</script>
+
+</body>
+</html>
